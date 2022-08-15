@@ -1,4 +1,4 @@
-let formulario = document.getElementById("formulario");
+/*let formulario = document.getElementById("formulario");
 let inputNombreProduto = document.getElementById("inputNombreProducto");
 let inputCantidad = document.getElementById("inputCantidad");
 let inputDireccion = document.getElementById("inputDireccion");
@@ -134,3 +134,133 @@ for (const producto of productmos) {
   contenedorProductos.append(column);
 }
 
+*/
+/*
+function entrada(){
+  return prompt("INGRESAR DATO");
+}
+
+function procesamiento(valor){
+  return "LA ENTRADA ES "+valor
+}
+
+function salida(valor){
+  alert(valor);
+}
+salida(procesamiento(entrada()));*/
+/*
+function redondeado(valor) {
+  return Math.round(valor)
+}
+
+for (let i = 0; i <5; i++) {
+    let ingreso=prompt('ingrese un numero')
+    alert(redondeado(ingreso))
+}
+*/
+/*
+
+function inpuesto(precio,porcentaje) {
+    return precio+porcentaje;
+}
+
+for (let i = 0; i <5; i++) {
+    let precio=parseFloat(prompt('ingrese el precio'))
+    let porcentaje=parseFloat(prompt('ingrese el porcentaje'))
+
+    alert(`el precio final es de ${inpuesto(precio,porcentaje)}`)
+}
+
+function impuesto(precio, porcentaje){
+  return precio + ((precio * porcentaje)/100)
+}
+for (let index = 0; index < 5; index++) {
+  let resultado = impuesto(parseFloat(prompt("INGRESAR PRECIO"))
+,parseFloat(prompt("INGRESAR %")));
+  alert(resultado);
+}
+*/
+/*
+const COTIZACION_DOLAR = 150;
+const cotizarDolar = (pesos) => pesos / COTIZACION_DOLAR;
+const cotizarPesos = (dolar) => dolar * COTIZACION_DOLAR;
+let seleccion = prompt("SELECCIONAR COTIZACION \n 1 - DOLARES A PESOS \n 2 -  PESOS A DOLAR ");
+let valor = prompt("VALOR");
+switch (seleccion) {
+    case "1":
+        alert(cotizarPesos(valor));
+        break;
+    case "2":
+        alert(cotizarDolar(valor));
+        break;
+    default:
+        break;
+}
+*/
+/*
+function validacion(cadena){
+  return cadena != '';
+}
+let entrada =  prompt("INGRESAR CADENA");
+while (entrada != 'ESC') {
+  alert(validacion(entrada));
+  entrada = prompt("INGRESAR CADENA");
+}*/
+/*
+class tienda{
+  constructor(nombre,direccion,propietaria,rubro){
+    this.nombre=nombre
+    this.direccion=direccion
+    this.propietaria=propietaria
+    this.rubro=rubro
+  }
+
+  mostraTienda(){
+    return`
+    el nombre: ${this.nombre}
+    el direccion: ${this.direccion}
+    el propietario: ${this.propietaria}
+    el rubro: ${this.rubro}`
+  }
+
+}
+
+const tienda1=new tienda("superchino","varela 18/15","apu","supermercado");
+const tienda2=new tienda("leo","varela 18/15","leo","carniceria");
+const tienda3=new tienda("los hermanos","quilmes 15","dlia","ferreteria");
+
+alert(tienda1.mostraTienda())
+alert(tienda2.mostraTienda())
+alert(tienda3.mostraTienda())*/
+
+
+class Tienda {
+  constructor(nombre, direccion, propietaria, rubro) {
+    this.nombre = nombre
+    this.direccion = direccion
+    this.propietaria = propietaria
+    this.rubro = rubro
+  }
+
+  mostraTienda() {
+    return `
+    el nombre: ${this.nombre}
+    el direccion: ${this.direccion}
+    el propietario: ${this.propietaria}
+    el rubro: ${this.rubro}`
+  }
+
+}
+let ingresados = '';
+for (let index = 0; index < 5; index++) {
+  let tienda = new Tienda(prompt("NOMBRE"),
+    prompt("DIRECCION"),
+    prompt("PROPIETARIO"),
+    prompt("RUBRO"));
+
+  ingresados += "Tienda: " + tienda.nombre + " " +
+    "Direccion: " + tienda.direccion + " " +
+    "Propitario: " + tienda.propietario + " " +
+    "rubro: " + tienda.rubro + "\n";
+}
+alert(ingresados);
