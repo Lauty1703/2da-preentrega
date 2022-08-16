@@ -1,266 +1,176 @@
-/*let formulario = document.getElementById("formulario");
-let inputNombreProduto = document.getElementById("inputNombreProducto");
-let inputCantidad = document.getElementById("inputCantidad");
-let inputDireccion = document.getElementById("inputDireccion");
-let submit=document.getElementById('submit');
+let carrito=[];
 
-
-
-
-let productos = [];
-
-class Productos {
-  constructor(
-    nombreProducto,
-    cantidad,
-    direccion
-  ) {
-    this.nombreProducto = nombreProducto.toUpperCase();
-    this.cantidad = cantidad;
-    this.direccion = direccion;
-  }
-}
-
-formulario.onsubmit = (event) => validarFormulario(event);
-
-function validarFormulario(event) {
-  event.preventDefault();
-  let nombreProducto = (inputNombreProducto.value);
-  let cantidad = parseInt(inputCantidad.value);
-  let direccion = (inputDireccion.value);
- 
-  
-  let producto = new Productos(
-    nombreProducto,
-    cantidad,
-    direccion
-  );
- 
-  productos.push(producto);
-  sessionStorage.setItem('nombreProducto',  JSON.stringify(productos))
-
-
-  console.log(productos);
-}
-
-
-
-let productmos=[{
-  id: 1,
-  nombre: 'helado de crema de oreo',
-  codigo: '0111202',
-  precio: 2500,
-  imagen: './img/oferta1.jpg',
-  descripcion_corta: 'helado de crema y oreo de 1 kilo',
-  stock:100,
-  alt: 'helado de crema y oreo de 1 kilo',
+let stockProductos=[{
+    id: 1,
+    peso:'1kg',
+    nombre: 'helado de crema de oreo ',
+    codigo: '0111202',
+    precio: 2500,
+    imagen: './img/oferta1.jpg',
+    descripcion_corta: 'helado de crema y oreo de 1 kilo',
 }, {
-  id: 2,
-  nombre: 'helado de dulce de leche ',
-  codigo: '2100240',
-  precio: 2000,
-  imagen: './img/oferta2.jpg',
-  descripcion_corta: 'helado cofler de 1 kilo',
-  stock:100,
-  alt: 'helado cofler de 1 kilo',
-  
+    id: 2,
+    peso:'1kg',
+    nombre: ' cofler dulce de leche ',
+    codigo: '2100240',
+    precio: 2000,
+    imagen: './img/oferta2.jpg',
+    descripcion_corta: 'helado cofler de 1 kilo',
 },{
-  id: 3,
-  nombre: 'helado de dulce de leche granizado ',
-  codigo: '2195461',
-  precio: 1850,
-  imagen: './img/oferta3.jpg',
-  descripcion_corta: 'helado cofler de 1 kilo',
-  stock:100,
-  alt: 'helado cofler de 1 kilo',
+    id: 3,
+    peso:'1kg',
+    nombre: 'helado de frutilla y crema',
+    codigo: '2195461',
+    precio: 1850,
+    imagen: './img/oferta3.jpg',
+    descripcion_corta: 'helado cofler de 1 kilo',
+
 }
 ,{
-  id: 4,
-  nombre: 'helado de chocolate',
-  codigo: '2192034',
-  precio: 2000,
-  imagen: './img/oferta4.jpg',
-  descripcion_corta: 'helado coffee de 1 kilo',
-  stock:100,
-  alt: 'helado coffe de 1 kilo chocolate',
+    id: 4,
+    peso:'1kg',
+    nombre: 'helado de chocolate',
+    codigo: '2192034',
+    precio: 2000,
+    imagen: './img/oferta4.jpg',
+    descripcion_corta: 'helado coffee de 1 kilo',
+
 }
 ,{
-  id: 5,
-  nombre: 'galletas de chocolate',
-  codigo: '1694810',
-  precio: 1850,
-  imagen: './img/oferta5.jpg',
-  descripcion_corta: 'helado de galletas de chocolate 1 kilo',
-  stock:100,
-  alt: 'galletas heladas de 1 kilo',
+    id: 5,
+    peso:'1kg',
+    nombre: 'galletas de chocolate',
+    codigo: '1694810',
+    precio: 1850,
+    imagen: './img/oferta5.jpg',
+    descripcion_corta: 'helado de galletas de chocolate 1 kilo',
+
 }
 ,{
-  id: 6,
-  nombre: 'helado de galleta de chocolate',
-  codigo: '1964785',
-  precio: 1900,
-  imagen: './img/oferta6.jpg',
-  descripcion_corta: 'helado nestle de galleta de chocolate de 1 kilo',
-  stock:100,
-  alt: 'helado de galleta nestle 1 kilo',
+    id: 6,
+    peso:'1kg',
+    nombre: 'helado de galleta de cholate',
+    codigo: '1964785',
+    precio: 1900,
+    imagen: './img/oferta6.jpg',
+    descripcion_corta: 'helado nestle de galleta de chocolate de 1 kilo',
+
+},
+{
+    id: 7,
+    peso:'1kg',
+    nombre: 'helado de galleta de cholate',
+    codigo: '1964785',
+    precio: 1900,
+    imagen: './img/oferta6.jpg',
+    descripcion_corta: 'helado nestle de galleta de chocolate de 1 kilo',
+
+},
+{
+    id: 8,
+    peso:'1kg',
+    nombre: 'helado de galleta de cholate',
+    codigo: '1964785',
+    precio: 1900,
+    imagen: './img/oferta1.jpg',
+
 }];
+const contenedorProductos=document.getElementById('contenedor-productos')
+const contenedorCarrito= document.getElementById('contadorCarrito');
+const botonVaciar=document.getElementById('vaciar-carrito')
+const contadorCarrito=document.getElementById('contadorCarrito')
+const precioTotal=document.getElementById('precioTotal')
 
 
-const contenedorProductos = document.getElementById("contenedor-productos");
 
-for (const producto of productmos) {
-  let column = document.createElement("div");
-  column.id = `columna-${producto.id}`;
-  column.innerHTML = `
-<div class="col-12 justify-content-center text-center m-3 px-5 ">
-  <div class="card mb-3" >
-    <div class="row g-0 bg-white rounded">
-      <div class="col-12 ">
-        <img src="${producto.imagen}" class="img-fluid rounded-start " alt="${producto.alt}">
-      </div>
-      <div class="col-12 ">
-        <div class="card-body">
-          <h5 class="card-title">${producto.nombre}</h5>
-          <p class="card-text">${producto.descripcion_corta}</p>
-          <p class="card-text">$${producto.precio}</p>
-          <p class="card-text">stock:${producto.stock}</p>
-          <button type="button" class=" w-100  btn btn-primary">Comprar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>`;
+const contenedorModal = document.getElementsByClassName('modal-contenedor')[0]
+const botonAbrir = document.getElementById('boton-carrito')
+const botonCerrar = document.getElementById('carritoCerrar')
+const modalCarrito = document.getElementsByClassName('modal-carrito')[0]
 
-  contenedorProductos.append(column);
+
+
+
+
+botonVaciar.addEventListener('click',()=>{
+    carrito.length=0;
+    actualizarCarrito()
+})
+
+stockProductos.forEach((producto)=>{
+    const div=document.createElement('div')
+    div.classList.add('producto')
+    div.innerHTML=`
+    <img src=${producto.imagen} alt="">
+    <h3>${producto.nombre}</h3>
+    <p>peso: ${producto.peso}</p>
+    <p class="precioProducto">precio:$ ${producto.precio} </p>
+    <button id="agregar${producto.id}" class="boton-agregar">agregar<i class="fas fa-shopping-cart"></i></button>
+
+    `
+    contenedorProductos.appendChild(div)
+
+    const boton=document.getElementById(`agregar${producto.id}`)
+
+    boton.addEventListener('click',()=>{
+        agregarAlCarrito(producto.id)
+    })
+})
+
+
+
+
+
+botonAbrir.addEventListener('click', ()=>{
+    contenedorModal.classList.toggle('modal-active')
+})
+botonCerrar.addEventListener('click', ()=>{
+    contenedorModal.classList.toggle('modal-active')
+})
+
+contenedorModal.addEventListener('click', (event) =>{
+    contenedorModal.classList.toggle('modal-active')
+
+})
+modalCarrito.addEventListener('click', (event) => {
+    event.stopPropagation() 
+})
+
+
+
+
+const agregarAlCarrito=(prodId)=>{
+    const item=stockProductos.find((prod)=> prod.id===prodId)
+    carrito.push(item)
+    actualizarCarrito()
+    console.log(carrito)
 }
 
-*/
-/*
-function entrada(){
-  return prompt("INGRESAR DATO");
+
+const eliminarDelCarrito=(prodId)=>{
+    const item=carrito.find((prof)=> prod.id===prodId)
+
+    const indice=carrito.indexOf(item)
+    carrito.splice(indice,1)
+    actualizarCarrito()
 }
 
-function procesamiento(valor){
-  return "LA ENTRADA ES "+valor
+
+const actualizarCarrito=()=>{
+
+    contenedorCarrito.innerHTML=""
+
+
+    carrito.forEach((prod)=>{
+        const div=document.createElement('div')
+        div.className=('productoEnCarrito')
+        div.innerHTML=`
+        <p>${prod.nombre}</p>
+        <p>precio: ${prod.precio}</p>
+        <p>cantidad: <spam id="cantidad"> ${prod.precio} </spam></p>
+        <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i>
+        `
+        contenedorCarrito.appendChild(div)
+    })
+    contadorCarrito.innerText=carrito.length
 }
-
-function salida(valor){
-  alert(valor);
-}
-salida(procesamiento(entrada()));*/
-/*
-function redondeado(valor) {
-  return Math.round(valor)
-}
-
-for (let i = 0; i <5; i++) {
-    let ingreso=prompt('ingrese un numero')
-    alert(redondeado(ingreso))
-}
-*/
-/*
-
-function inpuesto(precio,porcentaje) {
-    return precio+porcentaje;
-}
-
-for (let i = 0; i <5; i++) {
-    let precio=parseFloat(prompt('ingrese el precio'))
-    let porcentaje=parseFloat(prompt('ingrese el porcentaje'))
-
-    alert(`el precio final es de ${inpuesto(precio,porcentaje)}`)
-}
-
-function impuesto(precio, porcentaje){
-  return precio + ((precio * porcentaje)/100)
-}
-for (let index = 0; index < 5; index++) {
-  let resultado = impuesto(parseFloat(prompt("INGRESAR PRECIO"))
-,parseFloat(prompt("INGRESAR %")));
-  alert(resultado);
-}
-*/
-/*
-const COTIZACION_DOLAR = 150;
-const cotizarDolar = (pesos) => pesos / COTIZACION_DOLAR;
-const cotizarPesos = (dolar) => dolar * COTIZACION_DOLAR;
-let seleccion = prompt("SELECCIONAR COTIZACION \n 1 - DOLARES A PESOS \n 2 -  PESOS A DOLAR ");
-let valor = prompt("VALOR");
-switch (seleccion) {
-    case "1":
-        alert(cotizarPesos(valor));
-        break;
-    case "2":
-        alert(cotizarDolar(valor));
-        break;
-    default:
-        break;
-}
-*/
-/*
-function validacion(cadena){
-  return cadena != '';
-}
-let entrada =  prompt("INGRESAR CADENA");
-while (entrada != 'ESC') {
-  alert(validacion(entrada));
-  entrada = prompt("INGRESAR CADENA");
-}*/
-/*
-class tienda{
-  constructor(nombre,direccion,propietaria,rubro){
-    this.nombre=nombre
-    this.direccion=direccion
-    this.propietaria=propietaria
-    this.rubro=rubro
-  }
-
-  mostraTienda(){
-    return`
-    el nombre: ${this.nombre}
-    el direccion: ${this.direccion}
-    el propietario: ${this.propietaria}
-    el rubro: ${this.rubro}`
-  }
-
-}
-
-const tienda1=new tienda("superchino","varela 18/15","apu","supermercado");
-const tienda2=new tienda("leo","varela 18/15","leo","carniceria");
-const tienda3=new tienda("los hermanos","quilmes 15","dlia","ferreteria");
-
-alert(tienda1.mostraTienda())
-alert(tienda2.mostraTienda())
-alert(tienda3.mostraTienda())*/
-
-
-class Tienda {
-  constructor(nombre, direccion, propietaria, rubro) {
-    this.nombre = nombre
-    this.direccion = direccion
-    this.propietaria = propietaria
-    this.rubro = rubro
-  }
-
-  mostraTienda() {
-    return `
-    el nombre: ${this.nombre}
-    el direccion: ${this.direccion}
-    el propietario: ${this.propietaria}
-    el rubro: ${this.rubro}`
-  }
-
-}
-let ingresados = '';
-for (let index = 0; index < 5; index++) {
-  let tienda = new Tienda(prompt("NOMBRE"),
-    prompt("DIRECCION"),
-    prompt("PROPIETARIO"),
-    prompt("RUBRO"));
-
-  ingresados += "Tienda: " + tienda.nombre + " " +
-    "Direccion: " + tienda.direccion + " " +
-    "Propitario: " + tienda.propietario + " " +
-    "rubro: " + tienda.rubro + "\n";
-}
-alert(ingresados);
